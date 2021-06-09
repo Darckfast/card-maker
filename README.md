@@ -1,8 +1,5 @@
-# NextJs Template with typescript
-
-This repo make part of a series of repositories with a couple of libs/framework already setup, just to make life a bit easier
-
-![Demo](.github/demo.gif)
+# Card maker
+![Demo](.github/demo.png)
 
 ## What is included in this repo?
 
@@ -18,10 +15,6 @@ This repo include the following libs/framework/features:
 
 ### Frameworks
 * NextJS (10)
-
-### Features
-* Dark-mode using a custom react hook
-* Custom checkbox component
 
 ## How to run
 
