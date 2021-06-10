@@ -22,6 +22,14 @@ export const FormContainer = styled.form`
       margin-bottom: 1rem;
       padding: 1rem;
     }
+
+    input[type=color] {
+      width: 10rem;
+      height: 2rem;
+
+      outline: none;
+      background-color: transparent;
+    }
   }
 
 `

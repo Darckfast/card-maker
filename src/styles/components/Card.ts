@@ -3,15 +3,33 @@ import styled from 'styled-components'
 interface CardProps {
   colors: {
     backgroundColor: string,
-    innerBackgroundColor: string,
+    innerBackgroundColor: string
   }
   effects: {
     holoEffect: boolean,
     sparklesEffect: boolean
+  },
+  holoPosition: {
+    position: {
+      x: string,
+      y: string,
+    },
+    rotation: {
+      x: string,
+      y: string
+    },
+    transition: string
   }
 }
 
-export const CardContainer = styled.div<CardProps>`
+export const CardContainer = styled.div.attrs((props: any) => ({
+  style: {
+    transform: `rotateX(${props.holoPosition.rotation.x}) rotateY(${props.holoPosition.rotation.y})`,
+    backgroundPositionX: props.holoPosition.position.x,
+    backgroundPositionY: props.holoPosition.position.y,
+    transition: props.holoPosition.transition
+  }
+}))<CardProps>`
   width: 320px;
   height: 460px;
 
@@ -25,6 +43,9 @@ export const CardContainer = styled.div<CardProps>`
   margin: 2rem;
 
   background-color: ${props => props.colors.backgroundColor};
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  transform-origin: center;
 
   &::after {
     content: "";
@@ -70,7 +91,7 @@ export const CardContainer = styled.div<CardProps>`
 
   img {
     max-width: 256px;
-    max-height: 242px;
+    max-height: 200px;
 
     border: 2px solid ${props => props.colors.innerBackgroundColor };;
     margin-bottom: 2rem;

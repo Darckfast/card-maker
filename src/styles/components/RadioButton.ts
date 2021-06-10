@@ -2,11 +2,16 @@ import styled from 'styled-components'
 
 
 export const RadioButtonContainer = styled.div`
+  margin: 1rem;
+
  label {
    font-size: 1rem;
    color: ${props => props.theme.colors.text};
    display: flex;
 
+   svg {
+     margin: 0 1rem .3rem 0;
+   }
 
    input[type=radio] {
       transition: .2s;
@@ -14,8 +19,10 @@ export const RadioButtonContainer = styled.div`
       width: 0;
       height: 0;
 
-      &:checked + span {
-        background: radial-gradient(${props => props.theme.colors.text}  50%, rgba(255, 0, 0, 0) 60%);
+      &:checked + svg {
+        circle[type=checkmark] {
+          fill: ${props => props.theme.colors.text};
+        }
       }
    }
 

@@ -9,11 +9,22 @@ export const Container = styled.div`
   align-items: center;
 
   main {
-    display: inherit;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 768px;
 
     .toggle-button {
       align-self: flex-end;
+    }
+
+    footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      a {
+        margin: 1rem;
+      }
     }
   }
 `
@@ -30,7 +41,10 @@ export const ToggleLabel = styled.label`
   }
 
   input:checked + svg {
-    fill: #0ec63c;
+    path {
+      animation: check .2s ease;
+      animation-fill-mode: forwards;
+    }
   }
 
   svg {

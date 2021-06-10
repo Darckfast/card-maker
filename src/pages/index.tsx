@@ -6,15 +6,31 @@ import { GitHubIcon } from '../styles/icons/githubIcon'
 import Card from '../components/card/Card'
 import { FormContainer } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
-import RadioButton from '../components/radio-button/radioButton'
+import RadioButton from '../components/radio-button/RadioButton'
 
 const Home: React.FC<any> = (props) => {
   const [cardName, setCardName] = useState('')
   const [cardDescription, setCardDescription] = useState('')
-  const [color, setColor] = useState('black')
+  const [color, setColor] = useState({ backgroundColor: '#404040', innerBackgroundColor: 'white' })
   const [cardImgSrc, setCardImgSrc] = useState('')
   const [holoEffect, setHoloEffect] = useState(false)
   const [sparklesEffect, setSparklesEffect] = useState(false)
+
+
+  const setColorSchema = (color) => {
+    switch (color) {
+      case 'Blue':
+        return ({ backgroundColor: '#4744CB', innerBackgroundColor: '#ABB3FC' })
+      case 'Red':
+        return ({ backgroundColor: '#E43232', innerBackgroundColor: '#FCABAB' })
+      case 'Green':
+        return ({ backgroundColor: '#00A66A', innerBackgroundColor: '#ABFCC2' })
+      case 'Black':
+        return ({ backgroundColor: 'black', innerBackgroundColor: 'white' })
+      default:
+        return ({ backgroundColor: '#404040', innerBackgroundColor: 'white' })
+    }
+  }
 
   return (
     <Container>
@@ -23,30 +39,32 @@ const Home: React.FC<any> = (props) => {
       </Head>
 
       <main>
-        <ToggleTheme changeTheme={props.themeToggle} currentTheme={props.currentTheme}></ToggleTheme>
-
-        <Card
-          holoEffect={holoEffect}
-          sparklesEffect={sparklesEffect}
-          cardDescription={cardDescription}
-          cardName={cardName}
-          cardImgSrc={cardImgSrc}
-          color={'white'} />
-
         <FormContainer>
           <label>
             Card Name:
-            <input type='text' value={cardName} onChange={e => setCardName(() => e.target.value)} />
+            <input
+              type='text'
+              autoComplete='off'
+              value={cardName}
+              onChange={e => setCardName(() => e.target.value)} />
           </label>
 
           <label>
             Card Description:
-            <input type='text' value={cardDescription} onChange={e => setCardDescription(() => e.target.value)} />
+            <input
+              type='text'
+              autoComplete='off'
+              value={cardDescription}
+              onChange={e => setCardDescription(() => e.target.value)} />
           </label>
 
           <label>
             Image Src:
-            <input type='text' value={cardImgSrc} onChange={e => setCardImgSrc(() => e.target.value)} />
+            <input
+              type='text'
+              autoComplete='off'
+              value={cardImgSrc}
+              onChange={e => setCardImgSrc(() => e.target.value)} />
           </label>
 
           <CheckBox
@@ -60,13 +78,31 @@ const Home: React.FC<any> = (props) => {
             label={'Enable Sparkles'}
             onChangeValue={e => setSparklesEffect(() => e.target.checked)}
           />
+        </FormContainer>
 
-          {/* <RadioButton options={['1', '2']} /> */}
+        <Card
+          holoEffect={holoEffect}
+          sparklesEffect={sparklesEffect}
+          cardDescription={cardDescription}
+          cardName={cardName}
+          cardImgSrc={cardImgSrc}
+          color={color} />
+
+        <FormContainer>
+          <label>
+            Card color schema:
+            <RadioButton
+              options={['Blue', 'Red', 'Black', 'Grey', 'Green']}
+              onChangeValue={(e) => setColor(() => setColorSchema(e.target.value))}
+            />
+          </label>
         </FormContainer>
         <footer>
           <a href="https://github.com/Darckfast/nextjs-typescript-template">
             <GitHubIcon></GitHubIcon>
           </a>
+
+          <ToggleTheme changeTheme={props.themeToggle} currentTheme={props.currentTheme}></ToggleTheme>
         </footer>
       </main>
     </Container>
