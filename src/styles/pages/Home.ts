@@ -12,6 +12,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     max-width: 768px;
+    grid-column-gap: 1rem;
 
     .toggle-button {
       align-self: flex-end;
@@ -25,6 +26,17 @@ export const Container = styled.div`
       a {
         margin: 1rem;
       }
+    }
+
+    .code {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem;
+
+      font-size: 18px;
+
+      overflow-wrap: anywhere;
     }
   }
 `
