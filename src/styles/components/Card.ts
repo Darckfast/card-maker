@@ -1,10 +1,8 @@
 import styled from 'styled-components'
 
 interface CardProps {
-  colors: {
-    backgroundColor: string,
-    innerBackgroundColor: string
-  }
+  backgroundColor: string,
+  innerBackgroundColor: string,
   effects: {
     holoEffect: boolean,
     sparklesEffect: boolean
@@ -19,7 +17,8 @@ interface CardProps {
       y: string
     },
     transition: string
-  }
+  },
+  enableAnimation: boolean
 }
 
 export const CardContainer = styled.div.attrs((props: any) => ({
@@ -38,14 +37,17 @@ export const CardContainer = styled.div.attrs((props: any) => ({
   justify-content: center;
   position: relative;
   flex-direction: column;
+  font: 400 16px Roboto,sans-serif;
 
   border-radius: 4px;
-  margin: 2rem;
 
-  background-color: ${props => props.colors.backgroundColor};
+  background-color: ${props => props.backgroundColor};
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   transform-origin: center;
+  animation: ${props => props.enableAnimation ? 'holoCard 15s ease infinite' : 'none'};
+  perspective: 2000px;
+  transform: translate3d(0,0,-1px);
 
   &::after {
     content: "";
@@ -74,9 +76,10 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     background-size: 300% 300%;
     opacity: 1;
     z-index: 1;
-    transform: translate3d(0, 0, 0);
+
     will-change: transform;
     mix-blend-mode: color-dodge;
+    animation: ${props => props.enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'};
 
     background-image: ${
     props => props.effects.holoEffect ?
@@ -93,16 +96,16 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     max-width: 256px;
     max-height: 200px;
 
-    border: 2px solid ${props => props.colors.innerBackgroundColor };;
+    border: 2px solid ${props => props.innerBackgroundColor };;
     margin-bottom: 2rem;
   }
 
   .name {
-    width: 8rem;
+    width: 12rem;
     height: 2rem;
 
-    border: 2px solid ${props => props.colors.innerBackgroundColor };
-    color: ${props => props.colors.innerBackgroundColor };
+    border: 2px solid ${props => props.innerBackgroundColor };
+    color: ${props => props.innerBackgroundColor };
     border-radius: 4px;
     align-self: flex-start;
 
@@ -120,7 +123,7 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     height: 8rem;
 
     color: black;
-    background-color: ${props => props.colors.innerBackgroundColor };
+    background-color: ${props => props.innerBackgroundColor };
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -129,6 +132,30 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     overflow: hidden;
     overflow-wrap: anywhere;
     flex-flow: wrap;
-    padding: 1rem;
+    padding: .5rem;
   }
+
+  @keyframes holoCard {
+    0%, 100% {
+      transform: rotateX(0deg) rotateY(0deg);
+    }
+    33% {
+      transform: rotateX(10deg) rotateY(-6deg);
+    }
+    66% {
+      transform: rotateX(-10deg) rotateY(6deg);
+    }
+  }
+
+  @keyframes holoGradient {
+    0%, 100% {
+      background-position: 50% 50%;
+    }
+    33% {
+      background-position: 100% 100%;
+    }
+    66% {
+      background-position: 0% 0%;
+  }
+}
 `
