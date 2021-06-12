@@ -29,8 +29,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
 
-  console.log(configs)
-
   const sheet = new ServerStyleSheet()
 
   try {
