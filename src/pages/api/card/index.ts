@@ -5,25 +5,15 @@ import Card from '../../../components/card/Card'
 import { get } from 'https'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const {
-    name,
-    description,
-    imgSrc,
-    holoEffect,
-    sparklesEffect,
-    backgroundColor,
-    innerBackgroundColor
-  } = req.query
-
   const configs = {
     configs: {
-      name,
-      description,
-      imgSrc: await getImage(imgSrc as string),
-      holoEffect: holoEffect === 'true',
-      sparklesEffect: sparklesEffect === 'true',
-      backgroundColor,
-      innerBackgroundColor,
+      name: req.query.name as string,
+      description: req.query.description as string,
+      imgSrc: await getImage(req.query.imgSrc as string),
+      holoEffect: req.query.holoEffect === 'true',
+      sparklesEffect: req.query.sparklesEffect === 'true',
+      backgroundColor: req.query.backgroundColor as string,
+      innerBackgroundColor: req.query.innerBackgroundColor as string,
       enableAnimation: true,
       holoPosition: {
         position: {
