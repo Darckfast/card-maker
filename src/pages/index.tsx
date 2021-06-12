@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Container } from '../styles/pages/Home'
 import ToggleTheme from '../components/ToggleTheme'
@@ -9,27 +9,105 @@ import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
 
 const Home: React.FC<any> = (props) => {
-  const [cardName, setCardName] = useState('')
-  const [cardDescription, setCardDescription] = useState('')
-  const [color, setColor] = useState({ backgroundColor: '#404040', innerBackgroundColor: 'white' })
-  const [cardImgSrc, setCardImgSrc] = useState('')
-  const [holoEffect, setHoloEffect] = useState(false)
-  const [sparklesEffect, setSparklesEffect] = useState(false)
+  const [code, setCode] = useState('')
+  const [configForm, setConfigForm] = useState({
+    name: '',
+    description: '',
+    backgroundColor: '#404040',
+    innerBackgroundColor: 'white',
+    imgSrc: '',
+    holoEffect: false,
+    sparklesEffect: false,
+    enableAnimation: false,
+    holoPosition: {
+      position: {
+        x: '50%',
+        y: '50%'
+      },
+      rotation: {
+        x: '0deg',
+        y: '0deg'
+      },
+      transition: 'none',
+    }
+  })
 
 
   const setColorSchema = (color) => {
+    let colorSchema
     switch (color) {
       case 'Blue':
-        return ({ backgroundColor: '#4744CB', innerBackgroundColor: '#ABB3FC' })
+        colorSchema = ({ backgroundColor: '#4744CB', innerBackgroundColor: '#ABB3FC' })
+        break;
       case 'Red':
-        return ({ backgroundColor: '#E43232', innerBackgroundColor: '#FCABAB' })
+        colorSchema = ({ backgroundColor: '#E43232', innerBackgroundColor: '#FCABAB' })
+        break;
       case 'Green':
-        return ({ backgroundColor: '#00A66A', innerBackgroundColor: '#ABFCC2' })
+        colorSchema = ({ backgroundColor: '#00A66A', innerBackgroundColor: '#ABFCC2' })
+        break;
       case 'Black':
-        return ({ backgroundColor: 'black', innerBackgroundColor: 'white' })
+        colorSchema = ({ backgroundColor: 'black', innerBackgroundColor: 'white' })
+        break;
       default:
-        return ({ backgroundColor: '#404040', innerBackgroundColor: 'white' })
+        colorSchema = ({ backgroundColor: '#404040', innerBackgroundColor: 'white' })
+        break;
     }
+
+    setConfigForm(config => ({ ...config, ...colorSchema }))
+  }
+
+  useEffect(() => {
+    setCode(Object
+      .keys(configForm)
+      .map((val) => `${encodeURIComponent(val)}=${encodeURIComponent(configForm[val])}`)
+      .join('&'))
+  }, [configForm])
+
+
+  const registerMouse = (e) => {
+    const {
+      nativeEvent:
+      { offsetX, offsetY },
+      target:
+      { offsetHeight, offsetWidth } } = e
+
+    const calcPos = (offset: number, size: number) => Math.abs(Math.floor(100 / size * offset) - 100)
+
+    const xPos = calcPos(offsetX, offsetWidth)
+    const yPos = calcPos(offsetY, offsetHeight)
+
+    const xRot = (yPos - 50) / 2;
+    const yRot = ((xPos - 50) * .5) * -1;
+
+    setConfigForm((config) => ({
+      ...config, holoPosition: {
+        position: {
+          x: `${xPos}%`,
+          y: `${yPos}%`
+        },
+        rotation: {
+          x: `${xRot}deg`,
+          y: `${yRot}deg`
+        },
+        transition: 'none'
+      }
+    }))
+  }
+
+  const resetPosition = () => {
+    setConfigForm((config) => ({
+      ...config, holoPosition: {
+        position: {
+          x: '50%',
+          y: '50%'
+        },
+        rotation: {
+          x: '0deg',
+          y: '0deg'
+        },
+        transition: '.2s'
+      }
+    }))
   }
 
   return (
@@ -45,8 +123,8 @@ const Home: React.FC<any> = (props) => {
             <input
               type='text'
               autoComplete='off'
-              value={cardName}
-              onChange={e => setCardName(() => e.target.value)} />
+              value={configForm.name}
+              onChange={e => setConfigForm((config) => ({ ...config, name: e.target.value }))} />
           </label>
 
           <label>
@@ -54,8 +132,8 @@ const Home: React.FC<any> = (props) => {
             <input
               type='text'
               autoComplete='off'
-              value={cardDescription}
-              onChange={e => setCardDescription(() => e.target.value)} />
+              value={configForm.description}
+              onChange={e => setConfigForm((config) => ({ ...config, description: e.target.value }))} />
           </label>
 
           <label>
@@ -63,37 +141,40 @@ const Home: React.FC<any> = (props) => {
             <input
               type='text'
               autoComplete='off'
-              value={cardImgSrc}
-              onChange={e => setCardImgSrc(() => e.target.value)} />
+              value={configForm.imgSrc}
+              onChange={e => setConfigForm((config) => ({ ...config, imgSrc: e.target.value }))} />
           </label>
 
           <CheckBox
-            value={holoEffect}
+            value={configForm.holoEffect}
             label={'Enable HoloEffect'}
-            onChangeValue={e => setHoloEffect(() => e.target.checked)}
+            onChangeValue={e => setConfigForm((config) => ({ ...config, holoEffect: e.target.checked }))}
           />
 
           <CheckBox
-            value={sparklesEffect}
+            value={configForm.sparklesEffect}
             label={'Enable Sparkles'}
-            onChangeValue={e => setSparklesEffect(() => e.target.checked)}
+            onChangeValue={e => setConfigForm((config) => ({ ...config, sparklesEffect: e.target.checked }))}
           />
         </FormContainer>
 
-        <Card
-          holoEffect={holoEffect}
-          sparklesEffect={sparklesEffect}
-          cardDescription={cardDescription}
-          cardName={cardName}
-          cardImgSrc={cardImgSrc}
-          color={color} />
+        <div
+          onMouseMove={e => registerMouse(e)}
+          onMouseLeave={resetPosition}>
+
+          <svg width="320" height="460">
+            <foreignObject width="320" height="460" style={{ perspective: '2000px' }}>
+              <Card configs={configForm} />
+            </foreignObject>
+          </svg>
+        </div>
 
         <FormContainer>
           <label>
             Card color schema:
             <RadioButton
               options={['Blue', 'Red', 'Black', 'Grey', 'Green']}
-              onChangeValue={(e) => setColor(() => setColorSchema(e.target.value))}
+              onChangeValue={(e) => setColorSchema(e.target.value)}
             />
           </label>
         </FormContainer>
@@ -104,8 +185,12 @@ const Home: React.FC<any> = (props) => {
 
           <ToggleTheme changeTheme={props.themeToggle} currentTheme={props.currentTheme}></ToggleTheme>
         </footer>
+
+        <div className="code">
+          <span>{code}</span>
+        </div>
       </main>
-    </Container>
+    </Container >
   )
 }
 
