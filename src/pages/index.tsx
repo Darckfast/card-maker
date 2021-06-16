@@ -4,7 +4,7 @@ import { Container } from '../styles/pages/Home'
 import ToggleTheme from '../components/ToggleTheme'
 import { GitHubIcon } from '../styles/icons/githubIcon'
 import Card from '../components/card/Card'
-import { FormContainer, UrlSpan } from '../styles/components/Form'
+import { FormContainer } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
 
