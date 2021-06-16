@@ -6,7 +6,8 @@ const Svg = styled(Icon)`
   width: 32px;
   height: 32px;
 
-  rect, path {
+  rect,
+  path {
     stroke: ${props => props.theme.colors.text};
     fill: transparent;
   }
@@ -31,8 +32,11 @@ export const CheckBoxIcon = ({
 }: {
   className?: string
 }): JSX.Element => (
-  <Svg viewBox="0 0 32 32" className={className}> 
+  <Svg viewBox="0 0 32 32" className={className}>
     <rect x="1" y="1" width="30" height="30" rx="7" strokeWidth="2" />
-    <path d="M5.33331 14.2222L15.5555 23.5555L25.7778 7.11108" strokeWidth="2" />
+    <path
+      d="M5.33331 14.2222L15.5555 23.5555L25.7778 7.11108"
+      strokeWidth="2"
+    />
   </Svg>
 )

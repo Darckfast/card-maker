@@ -1,23 +1,23 @@
 import styled from 'styled-components'
 
 interface CardProps {
-  backgroundColor: string,
-  innerBackgroundColor: string,
+  backgroundColor: string
+  innerBackgroundColor: string
   effects: {
-    holoEffect: string,
+    holoEffect: string
     sparklesEffect: string
-  },
+  }
   holoPosition: {
     position: {
-      x: string,
-      y: string,
-    },
-    rotation: {
-      x: string,
+      x: string
       y: string
-    },
+    }
+    rotation: {
+      x: string
+      y: string
+    }
     transition: string
-  },
+  }
   enableAnimation: boolean
 }
 
@@ -37,7 +37,7 @@ export const CardContainer = styled.div.attrs((props: any) => ({
   justify-content: center;
   position: relative;
   flex-direction: column;
-  font: 400 16px Roboto,sans-serif;
+  font: 400 16px Roboto, sans-serif;
 
   border-radius: 4px;
 
@@ -45,12 +45,13 @@ export const CardContainer = styled.div.attrs((props: any) => ({
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   transform-origin: center;
-  animation: ${props => props.enableAnimation ? 'holoCard 15s ease infinite' : 'none'};
+  animation: ${props =>
+    props.enableAnimation ? 'holoCard 15s ease infinite' : 'none'};
   perspective: 2000px;
-  transform: translate3d(0,0,-1px);
+  transform: translate3d(0, 0, -1px);
 
   ::after {
-    content: "";
+    content: '';
     position: absolute;
     width: 296px;
     height: 437px;
@@ -60,13 +61,12 @@ export const CardContainer = styled.div.attrs((props: any) => ({
 
     background-image: url(${props => props.effects.sparklesEffect});
 
-//    background-image: ${props => props.effects.sparklesEffect ? 'url(https://64.media.tumblr.com/2541216cdf5738dd5b0c32a0b6737c4f/tumblr_opno5nZGCT1vsjcxvo1_r1_540.gifv)': 'none' };
     mix-blend-mode: screen;
     background-repeat: no-repeat;
   }
 
   ::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
@@ -81,25 +81,27 @@ export const CardContainer = styled.div.attrs((props: any) => ({
 
     will-change: transform;
     mix-blend-mode: color-dodge;
-    animation: ${props => props.enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'};
+    animation: ${props =>
+      props.enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'};
 
     background-image: url(${props => props.effects.holoEffect});
-    /* background-image: ${
-    props => props.effects.holoEffect ?
-    `linear-gradient(
+    /* background-image: ${props =>
+      props.effects.holoEffect
+        ? `linear-gradient(
       120deg,
       transparent 18%,
       rgba(31, 231, 255, 0.7) 46%,
       rgba(255, 46, 235, 0.7) 56%,
       transparent 81%,
-      transparent 98%);` : 'none'} */
+      transparent 98%);`
+        : 'none'} */
   }
 
   img {
     max-width: 256px;
     max-height: 200px;
 
-    border: 2px solid ${props => props.innerBackgroundColor };;
+    border: 2px solid ${props => props.innerBackgroundColor};
     margin-bottom: 2rem;
   }
 
@@ -107,8 +109,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     width: 12rem;
     height: 2rem;
 
-    border: 2px solid ${props => props.innerBackgroundColor };
-    color: ${props => props.innerBackgroundColor };
+    border: 2px solid ${props => props.innerBackgroundColor};
+    color: ${props => props.innerBackgroundColor};
     border-radius: 4px;
     align-self: flex-start;
 
@@ -126,7 +128,7 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     height: 8rem;
 
     color: black;
-    background-color: ${props => props.innerBackgroundColor };
+    background-color: ${props => props.innerBackgroundColor};
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -135,11 +137,12 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     overflow: hidden;
     overflow-wrap: anywhere;
     flex-flow: wrap;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 
   @keyframes holoCard {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotateX(0deg) rotateY(0deg);
     }
     33% {
@@ -151,7 +154,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
   }
 
   @keyframes holoGradient {
-    0%, 100% {
+    0%,
+    100% {
       background-position: 50% 50%;
     }
     33% {
@@ -159,6 +163,6 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     }
     66% {
       background-position: 0% 0%;
+    }
   }
-}
 `

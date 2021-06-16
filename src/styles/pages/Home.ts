@@ -38,7 +38,7 @@ export const Container = styled.div`
       color: orange;
 
       button {
-        transition: .2s;
+        transition: 0.2s;
         background-color: transparent;
         outline: none;
         border: 2px solid ${props => props.theme.colors.text};
@@ -70,7 +70,7 @@ export const ToggleLabel = styled.label`
 
   input:checked + svg {
     path {
-      animation: check .2s ease;
+      animation: check 0.2s ease;
       animation-fill-mode: forwards;
     }
   }
@@ -81,12 +81,12 @@ export const ToggleLabel = styled.label`
     transition: 0.2s;
 
     path {
-      stroke: ${props => props.theme.colors.text}
+      stroke: ${props => props.theme.colors.text};
     }
 
     circle {
       transition: 0.2s;
-      fill: ${props => props.theme.colors.text}
+      fill: ${props => props.theme.colors.text};
     }
   }
 `

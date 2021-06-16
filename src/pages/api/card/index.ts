@@ -3,7 +3,6 @@ import { ServerStyleSheet } from 'styled-components'
 import { renderToString } from 'react-dom/server'
 import Card from '../../../components/card/Card'
 import { get } from 'https'
-import { config } from 'process'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const configs = {
@@ -16,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     },
     sparkles: {
       enabled: req.query['sparkles[enabled]'] === 'true',
-      src:  req.query['sparkles[src]'] as string
+      src: req.query['sparkles[src]'] as string
     },
     backgroundColor: req.query.backgroundColor as string,
     innerBackgroundColor: req.query.innerBackgroundColor as string,
@@ -30,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         x: '0deg',
         y: '0deg'
       },
-      transition: 'none',
+      transition: 'none'
     }
   }
 
@@ -39,13 +38,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (configs.sparkles.enabled) {
-    configs.sparkles.src = await getImageAsBase64(configs.sparkles.src as string)
+    configs.sparkles.src = await getImageAsBase64(
+      configs.sparkles.src as string
+    )
   }
 
   const sheet = new ServerStyleSheet()
 
   try {
-    const html = renderToString(sheet.collectStyles(Card({configs})))
+    const html = renderToString(sheet.collectStyles(Card({ configs })))
     const styles = sheet.getStyleTags()
 
     res.setHeader('Content-Type', 'image/svg+xml')

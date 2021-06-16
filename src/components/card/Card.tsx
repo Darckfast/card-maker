@@ -1,23 +1,23 @@
 import React from 'react'
-import { CardContainer } from '../../styles/components/Card';
+import { CardContainer } from '../../styles/components/Card'
 
 export interface CardComponentProps {
   configs: {
-    name: string,
-    description: string,
-    imgSrc: string,
-    backgroundColor: string,
-    innerBackgroundColor: string,
-    holoPosition: any,
-    enableAnimation: boolean,
+    name: string
+    description: string
+    imgSrc: string
+    backgroundColor: string
+    innerBackgroundColor: string
+    holoPosition: any
+    enableAnimation: boolean
     holo: {
-      enabled: boolean,
+      enabled: boolean
       src: string
-    },
+    }
     sparkles: {
-      enabled: boolean,
+      enabled: boolean
       src: string
-    },
+    }
   }
 }
 
@@ -26,7 +26,9 @@ const Card: React.FC<CardComponentProps> = props => {
     <CardContainer
       effects={{
         holoEffect: props.configs.holo.enabled ? props.configs.holo.src : '',
-        sparklesEffect: props.configs.sparkles.enabled ? props.configs.sparkles.src : ''
+        sparklesEffect: props.configs.sparkles.enabled
+          ? props.configs.sparkles.src
+          : ''
       }}
       innerBackgroundColor={props.configs.innerBackgroundColor}
       backgroundColor={props.configs.backgroundColor}
@@ -36,7 +38,8 @@ const Card: React.FC<CardComponentProps> = props => {
       <img src={props.configs.imgSrc} />
       <span className={'name'}>{props.configs.name}</span>
       <span className={'description'}>{props.configs.description}</span>
-    </CardContainer>)
+    </CardContainer>
+  )
 }
 
 export default Card

@@ -7,10 +7,10 @@ const Svg = styled(Icon)`
   height: 22px;
 
   circle {
-    transition: .2s;
+    transition: 0.2s;
     fill: transparent;
 
-    stroke: ${props => props.theme.colors.text}
+    stroke: ${props => props.theme.colors.text};
   }
 `
 export const RadioButtonIcon = ({

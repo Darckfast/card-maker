@@ -11,12 +11,12 @@ const Svg = styled(Icon)`
   cursor: pointer;
 
   border-radius: 50%;
-  padding: .3rem;
+  padding: 0.3rem;
   background-color: ${props => props.theme.colors.backgroundLight};
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   &:hover {
-    transition: .2s;
+    transition: 0.2s;
     fill: #4598ed;
 
     background-color: ${props => props.theme.colors.backgroundLighter};

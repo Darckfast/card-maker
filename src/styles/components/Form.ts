@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-
 export const FormContainer = styled.form`
   display: flex;
   justify-content: center;
@@ -10,8 +9,8 @@ export const FormContainer = styled.form`
   label {
     align-self: flex-end;
 
-    input[type=text] {
-      transition: .2s;
+    input[type='text'] {
+      transition: 0.2s;
       background-color: transparent;
       outline: none;
       border: 2px solid ${props => props.theme.colors.text};
@@ -28,7 +27,7 @@ export const FormContainer = styled.form`
       }
     }
 
-    input[type=color] {
+    input[type='color'] {
       width: 10rem;
       height: 2rem;
 
