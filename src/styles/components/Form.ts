@@ -11,6 +11,7 @@ export const FormContainer = styled.form`
     align-self: flex-end;
 
     input[type=text] {
+      transition: .2s;
       background-color: transparent;
       outline: none;
       border: 2px solid ${props => props.theme.colors.text};
@@ -21,6 +22,10 @@ export const FormContainer = styled.form`
       color: ${props => props.theme.colors.text};
       margin-bottom: 1rem;
       padding: 1rem;
+
+      &:disabled {
+        border: 2px solid ${props => props.theme.colors.disabledText};
+      }
     }
 
     input[type=color] {
@@ -31,5 +36,4 @@ export const FormContainer = styled.form`
       background-color: transparent;
     }
   }
-
 `

@@ -4,8 +4,8 @@ interface CardProps {
   backgroundColor: string,
   innerBackgroundColor: string,
   effects: {
-    holoEffect: boolean,
-    sparklesEffect: boolean
+    holoEffect: string,
+    sparklesEffect: string
   },
   holoPosition: {
     position: {
@@ -49,7 +49,7 @@ export const CardContainer = styled.div.attrs((props: any) => ({
   perspective: 2000px;
   transform: translate3d(0,0,-1px);
 
-  &::after {
+  ::after {
     content: "";
     position: absolute;
     width: 296px;
@@ -58,12 +58,14 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     border: 1px solid white;
     border-radius: inherit;
 
-    background-image: ${props => props.effects.sparklesEffect ? 'url(https://64.media.tumblr.com/2541216cdf5738dd5b0c32a0b6737c4f/tumblr_opno5nZGCT1vsjcxvo1_r1_540.gifv)': 'none' };
+    background-image: url(${props => props.effects.sparklesEffect});
+
+//    background-image: ${props => props.effects.sparklesEffect ? 'url(https://64.media.tumblr.com/2541216cdf5738dd5b0c32a0b6737c4f/tumblr_opno5nZGCT1vsjcxvo1_r1_540.gifv)': 'none' };
     mix-blend-mode: screen;
     background-repeat: no-repeat;
   }
 
-  &::before {
+  ::before {
     content: "";
     position: absolute;
     left: 0;
@@ -81,7 +83,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     mix-blend-mode: color-dodge;
     animation: ${props => props.enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'};
 
-    background-image: ${
+    background-image: url(${props => props.effects.holoEffect});
+    /* background-image: ${
     props => props.effects.holoEffect ?
     `linear-gradient(
       120deg,
@@ -89,7 +92,7 @@ export const CardContainer = styled.div.attrs((props: any) => ({
       rgba(31, 231, 255, 0.7) 46%,
       rgba(255, 46, 235, 0.7) 56%,
       transparent 81%,
-      transparent 98%);` : 'none'}
+      transparent 98%);` : 'none'} */
   }
 
   img {

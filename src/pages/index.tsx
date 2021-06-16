@@ -4,20 +4,27 @@ import { Container } from '../styles/pages/Home'
 import ToggleTheme from '../components/ToggleTheme'
 import { GitHubIcon } from '../styles/icons/githubIcon'
 import Card from '../components/card/Card'
-import { FormContainer } from '../styles/components/Form'
+import { FormContainer, UrlSpan } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
 
 const Home: React.FC<any> = (props) => {
   const [code, setCode] = useState('')
+
   const [configForm, setConfigForm] = useState({
     name: '',
     description: '',
     backgroundColor: '#404040',
     innerBackgroundColor: 'white',
     imgSrc: '',
-    holoEffect: false,
-    sparklesEffect: false,
+    holo: {
+      enabled: false,
+      src: ''
+    },
+    sparkles: {
+      enabled: false,
+      src: ''
+    },
     enableAnimation: false,
     holoPosition: {
       position: {
@@ -57,12 +64,27 @@ const Home: React.FC<any> = (props) => {
   }
 
   useEffect(() => {
-    setCode(Object
-      .keys(configForm)
-      .map((val) => `${encodeURIComponent(val)}=${encodeURIComponent(configForm[val])}`)
-      .join('&'))
+    setCode(() => querystring(configForm))
   }, [configForm])
 
+
+  const querystring = (obj, prefix?) => {
+    const str = []
+    let p;
+
+    for (p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        const k = prefix ? prefix + "[" + p + "]" : p,
+          v = obj[p];
+
+        str.push((v !== null && typeof v === "object") ?
+          querystring(v, k) :
+          encodeURIComponent(k) + "=" + encodeURIComponent(v));
+      }
+    }
+
+    return str.join("&");
+  }
 
   const registerMouse = (e) => {
     const {
@@ -146,16 +168,38 @@ const Home: React.FC<any> = (props) => {
           </label>
 
           <CheckBox
-            value={configForm.holoEffect}
-            label={'Enable HoloEffect'}
-            onChangeValue={e => setConfigForm((config) => ({ ...config, holoEffect: e.target.checked }))}
+            value={configForm.sparkles.enabled}
+            label={'Enable Sparkles'}
+            onChangeValue={e => setConfigForm((config) => ({ ...config, sparkles: { ...config.sparkles, enabled: e.target.checked } }))}
           />
 
+          <label>
+            Sparkles Src:
+            <input
+              disabled={!configForm.sparkles.enabled}
+              type='text'
+              autoComplete='off'
+              value={configForm.sparkles.src}
+              onChange={e => setConfigForm((config) => ({ ...config, sparkles: { ...config.sparkles, src: e.target.value } }))} />
+          </label>
+
+
           <CheckBox
-            value={configForm.sparklesEffect}
-            label={'Enable Sparkles'}
-            onChangeValue={e => setConfigForm((config) => ({ ...config, sparklesEffect: e.target.checked }))}
+            value={configForm.holo.enabled}
+            label={'Enable HoloEffect'}
+            onChangeValue={e => setConfigForm((config) => ({ ...config, holo: { ...config.holo, enabled: e.target.checked } }))}
           />
+
+          <label>
+            Holo Src:
+            <input
+              disabled={!configForm.holo.enabled}
+              type='text'
+              autoComplete='off'
+              value={configForm.holo.src}
+              onChange={e => setConfigForm((config) => ({ ...config, holo: { ...config.holo, src: e.target.value } }))} />
+          </label>
+
         </FormContainer>
 
         <div
@@ -187,7 +231,7 @@ const Home: React.FC<any> = (props) => {
         </footer>
 
         <div className="code">
-          <span>{code}</span>
+          <button onClick={() => navigator.clipboard.writeText(code)}>Copy card code</button>
         </div>
       </main>
     </Container >

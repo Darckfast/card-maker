@@ -4,6 +4,7 @@ export const darkTheme = {
     backgroundLight: '#1d1d1d',
     backgroundLighter: '#272727',
     text: '#e1e1e6',
+    disabledText: '#232323'
   }
 }
 
@@ -12,6 +13,7 @@ export const lightTheme = {
     background: 'white',
     backgroundLight: '#f7f7f7',
     backgroundLighter: 'white',
-    text: 'black'
+    text: 'black',
+    disabledText: '#232323'
   }
 }

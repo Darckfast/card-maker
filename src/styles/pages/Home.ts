@@ -35,8 +35,24 @@ export const Container = styled.div`
       margin: 1rem;
 
       font-size: 18px;
+      color: orange;
 
-      overflow-wrap: anywhere;
+      button {
+        transition: .2s;
+        background-color: transparent;
+        outline: none;
+        border: 2px solid ${props => props.theme.colors.text};
+        color: ${props => props.theme.colors.text};
+        height: 2rem;
+        width: 11rem;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+          color: ${props => props.theme.colors.background};
+          background-color: ${props => props.theme.colors.text};
+        }
+      }
     }
   }
 `
