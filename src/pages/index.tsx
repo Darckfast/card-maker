@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Container } from '../styles/pages/Home'
-import ToggleTheme from '../components/ToggleTheme'
-import { GitHubIcon } from '../styles/svgs/githubIcon'
+import ToggleTheme, {
+  ToggleThemeProps
+} from '../components/toggle-theme/ToggleTheme'
+import { GitHubIcon } from '../styles/svgs/icons/githubIcon'
 import Card from '../components/card/Card'
 import { FormContainer } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
 
-const Home: React.FC<any> = props => {
+const Home: React.FC<ToggleThemeProps> = props => {
   const [code, setCode] = useState('')
 
   const [configForm, setConfigForm] = useState({
@@ -280,7 +282,7 @@ const Home: React.FC<any> = props => {
           </a>
 
           <ToggleTheme
-            changeTheme={props.themeToggle}
+            changeTheme={props.changeTheme}
             currentTheme={props.currentTheme}
           ></ToggleTheme>
         </footer>

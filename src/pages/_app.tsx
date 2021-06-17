@@ -3,13 +3,13 @@ import { AppProps } from 'next/app'
 import { ThemeProvider } from 'styled-components'
 
 import GlobalStyle from '../styles/global'
-import { useDarkMode } from '../components/hooks/useDarkMode'
+import { useDarkMode } from '../hooks/useDarkMode'
 import { lightTheme, darkTheme } from '../styles/theme'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const [currentTheme, themeToggle] = useDarkMode(lightTheme, darkTheme)
+  const [currentTheme, changeTheme] = useDarkMode(lightTheme, darkTheme)
 
-  pageProps = { ...pageProps, themeToggle, currentTheme }
+  pageProps = { ...pageProps, changeTheme, currentTheme }
 
   return (
     <ThemeProvider theme={currentTheme.activeTheme}>

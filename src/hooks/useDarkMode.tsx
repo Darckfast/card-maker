@@ -6,12 +6,17 @@ export const useDarkMode = (
   lightTheme: DefaultTheme,
   darkTheme: DefaultTheme
 ): [{ name: string; activeTheme: DefaultTheme }, () => void] => {
-  const [theme, setTheme] = useState({ name: 'dark', activeTheme: darkTheme })
+  const [currentTheme, setCurrentTheme] = useState({
+    name: 'dark',
+    activeTheme: darkTheme
+  })
 
   const themeToggler = (): void => {
-    const nextTheme = theme.name === 'light' ? 'dark' : 'light'
+    const nextTheme = currentTheme.name === 'light' ? 'dark' : 'light'
+
     localStorage.setItem('theme', nextTheme)
-    setTheme({
+
+    setCurrentTheme({
       name: nextTheme,
       activeTheme: nextTheme === 'light' ? lightTheme : darkTheme
     })
@@ -19,12 +24,13 @@ export const useDarkMode = (
 
   useEffect(() => {
     const localTheme = localStorage.getItem('theme')
+
     localTheme &&
-      setTheme({
+      setCurrentTheme({
         name: localTheme,
         activeTheme: localTheme === 'light' ? lightTheme : darkTheme
       })
   }, [])
 
-  return [theme, themeToggler]
+  return [currentTheme, themeToggler]
 }

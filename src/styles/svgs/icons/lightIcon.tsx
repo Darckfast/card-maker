@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Icon from './svgBase'
+import Icon from '../svgBase'
 
 const Svg = styled(Icon)`
   width: 40px;

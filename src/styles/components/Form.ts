@@ -17,10 +17,9 @@ export const FormContainer = styled.form`
       border-radius: 4px;
       height: 2rem;
       width: 15rem;
-      margin-left: 1rem;
       color: ${props => props.theme.colors.text};
-      margin-bottom: 1rem;
       padding: 1rem;
+      margin: 0 0 1rem 1rem;
 
       &:disabled {
         border: 2px solid ${props => props.theme.colors.disabledText};
