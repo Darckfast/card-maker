@@ -73,7 +73,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     sheet.seal()
   }
 
-  res.status(500).json({ msg: 'Erro during card generation' })
+  return res.status(500).json({ msg: 'Erro during card generation' })
 }
 
 const getImageAsBase64 = async (url: string) => {
