@@ -56,37 +56,3 @@ export const Container = styled.div`
     }
   }
 `
-
-export const ToggleLabel = styled.label`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-bottom: 1rem;
-  align-self: flex-end;
-
-  input {
-    display: none;
-  }
-
-  input:checked + svg {
-    path {
-      animation: check 0.2s ease;
-      animation-fill-mode: forwards;
-    }
-  }
-
-  svg {
-    cursor: pointer;
-    margin-left: 1em;
-    transition: 0.2s;
-
-    path {
-      stroke: ${props => props.theme.colors.text};
-    }
-
-    circle {
-      transition: 0.2s;
-      fill: ${props => props.theme.colors.text};
-    }
-  }
-`

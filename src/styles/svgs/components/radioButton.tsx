@@ -2,17 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import Icon from '../svgBase'
 
-const Svg = styled(Icon)`
-  width: 22px;
-  height: 22px;
+const Svg = styled(Icon)``
 
-  circle {
-    transition: 0.2s;
-    fill: transparent;
-
-    stroke: ${props => props.theme.colors.text};
-  }
-`
 export const RadioButtonIcon = ({
   className
 }: {

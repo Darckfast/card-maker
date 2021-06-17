@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
-import { CheckBoxIcon } from '../../styles/icons/components/checkbox'
-import { ToggleLabel } from '../../styles/pages/Home'
+import { CheckBoxIcon } from '../../styles/svgs/components/checkbox'
+import { ToggleLabel } from '../../styles/components/CheckBox'
 
 interface CheckBoxProps {
   label?: string

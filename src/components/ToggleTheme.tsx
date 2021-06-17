@@ -1,6 +1,6 @@
 import React from 'react'
-import { DarkIcon } from '../styles/icons/darkIcon'
-import { LightIcon } from '../styles/icons/lightIcon'
+import { DarkIcon } from '../styles/svgs/darkIcon'
+import { LightIcon } from '../styles/svgs/lightIcon'
 
 interface ToggleThemeProps {
   currentTheme: { activeTheme: any; name: string }

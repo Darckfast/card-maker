@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 import { RadioButtonContainer } from '../../styles/components/RadioButton'
-import { RadioButtonIcon } from '../../styles/icons/components/radioButton'
+import { RadioButtonIcon } from '../../styles/svgs/components/radioButton'
 
 interface RadioButtonProps {
   options: string[]

@@ -25,6 +25,11 @@ export const FormContainer = styled.form`
       &:disabled {
         border: 2px solid ${props => props.theme.colors.disabledText};
       }
+
+      &::placeholder {
+        font-family: Roboto, sans-serif;
+        font-weight: 400;
+      }
     }
 
     input[type='color'] {

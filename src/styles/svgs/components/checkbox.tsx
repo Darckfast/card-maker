@@ -2,31 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import Icon from '../svgBase'
 
-const Svg = styled(Icon)`
-  width: 32px;
-  height: 32px;
+const Svg = styled(Icon)``
 
-  rect,
-  path {
-    stroke: ${props => props.theme.colors.text};
-    fill: transparent;
-  }
-
-  path {
-    stroke-dasharray: 33;
-    stroke-dashoffset: 33;
-  }
-
-  @keyframes check {
-    from {
-      stroke-dashoffset: 33;
-    }
-
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-`
 export const CheckBoxIcon = ({
   className
 }: {

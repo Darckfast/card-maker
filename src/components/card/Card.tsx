@@ -8,7 +8,17 @@ export interface CardComponentProps {
     imgSrc: string
     backgroundColor: string
     innerBackgroundColor: string
-    holoPosition: any
+    holoPosition: {
+      position: {
+        x: string
+        y: string
+      }
+      rotation: {
+        x: string
+        y: string
+      }
+      transition: string
+    }
     enableAnimation: boolean
     holo: {
       enabled: boolean

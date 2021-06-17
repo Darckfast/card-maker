@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const configs = {
     name: req.query.name as string,
     description: req.query.description as string,
-    imgSrc: await getImageAsBase64(req.query.imgSrc as string),
+    imgSrc: req.query.imgSrc as string,
     holo: {
       enabled: req.query['holo[enabled]'] === 'true',
       src: req.query['holo[src]'] as string

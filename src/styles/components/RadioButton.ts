@@ -10,6 +10,14 @@ export const RadioButtonContainer = styled.div`
 
     svg {
       margin: 0 1rem 0.3rem 0;
+      width: 22px;
+      height: 22px;
+
+      circle {
+        fill: transparent;
+
+        stroke: ${props => props.theme.colors.text};
+      }
     }
 
     input[type='radio'] {
@@ -20,6 +28,7 @@ export const RadioButtonContainer = styled.div`
 
       &:checked + svg {
         circle[type='checkmark'] {
+          transition: fill 0.2s linear;
           fill: ${props => props.theme.colors.text};
         }
       }

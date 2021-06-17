@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Container } from '../styles/pages/Home'
 import ToggleTheme from '../components/ToggleTheme'
-import { GitHubIcon } from '../styles/icons/githubIcon'
+import { GitHubIcon } from '../styles/svgs/githubIcon'
 import Card from '../components/card/Card'
 import { FormContainer } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
@@ -160,6 +160,7 @@ const Home: React.FC<any> = props => {
             <input
               type="text"
               autoComplete="off"
+              placeholder={'Untitled card'}
               value={configForm.name}
               onChange={e =>
                 setConfigForm(config => ({ ...config, name: e.target.value }))
@@ -172,6 +173,7 @@ const Home: React.FC<any> = props => {
             <input
               type="text"
               autoComplete="off"
+              placeholder={'blank'}
               value={configForm.description}
               onChange={e =>
                 setConfigForm(config => ({
@@ -186,6 +188,7 @@ const Home: React.FC<any> = props => {
             Image Src:
             <input
               type="text"
+              placeholder={'https://imgur.com/bC8SSpf.png'}
               autoComplete="off"
               value={configForm.imgSrc}
               onChange={e =>
@@ -238,6 +241,7 @@ const Home: React.FC<any> = props => {
               disabled={!configForm.holo.enabled}
               type="text"
               autoComplete="off"
+              placeholder={'https://i.imgur.com/QPzHsAF.png'}
               value={configForm.holo.src}
               onChange={e =>
                 setConfigForm(config => ({
