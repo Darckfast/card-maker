@@ -51,6 +51,7 @@ export const Container = styled.div`
         &:hover {
           color: ${props => props.theme.colors.background};
           background-color: ${props => props.theme.colors.text};
+          transform: scale(1.1);
         }
       }
     }

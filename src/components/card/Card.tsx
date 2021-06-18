@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CardContainer } from '../../styles/components/Card'
 
 export interface CardComponentProps {
@@ -6,20 +6,7 @@ export interface CardComponentProps {
     name: string
     description: string
     imgSrc: string
-    backgroundColor: string
-    innerBackgroundColor: string
-    holoPosition: {
-      position: {
-        x: string
-        y: string
-      }
-      rotation: {
-        x: string
-        y: string
-      }
-      transition: string
-    }
-    enableAnimation: boolean
+    colorSchema: string
     holo: {
       enabled: boolean
       src: string
@@ -29,21 +16,31 @@ export interface CardComponentProps {
       src: string
     }
   }
+  animation: {
+    enableAnimation: boolean
+    position: {
+      x: string
+      y: string
+    }
+    rotation: {
+      x: string
+      y: string
+    }
+    transition: string
+  }
 }
 
 const Card: React.FC<CardComponentProps> = props => {
+  useEffect(() => {
+    console.log(props)
+  }, [])
+
   return (
     <CardContainer
-      effects={{
-        holoEffect: props.configs.holo.enabled ? props.configs.holo.src : '',
-        sparklesEffect: props.configs.sparkles.enabled
-          ? props.configs.sparkles.src
-          : ''
-      }}
-      innerBackgroundColor={props.configs.innerBackgroundColor}
-      backgroundColor={props.configs.backgroundColor}
-      holoPosition={props.configs.holoPosition}
-      enableAnimation={props.configs.enableAnimation}
+      colorSchema={props.configs.colorSchema}
+      holo={props.configs.holo}
+      sparkles={props.configs.sparkles}
+      animation={props.animation}
     >
       <img src={props.configs.imgSrc} />
       <span className={'name'}>{props.configs.name}</span>

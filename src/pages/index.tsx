@@ -9,15 +9,17 @@ import Card from '../components/card/Card'
 import { FormContainer } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
+import { useMouseMovement } from '../hooks/useMouseMovement'
+import { querystring } from '../utils/querystring'
 
 const Home: React.FC<ToggleThemeProps> = props => {
   const [code, setCode] = useState('')
+  const [animation, registerMouse, resetPosition] = useMouseMovement()
 
   const [configForm, setConfigForm] = useState({
     name: '',
     description: '',
-    backgroundColor: '#404040',
-    innerBackgroundColor: 'white',
+    colorSchema: 'grey',
     imgSrc: '',
     holo: {
       enabled: false,
@@ -26,128 +28,12 @@ const Home: React.FC<ToggleThemeProps> = props => {
     sparkles: {
       enabled: false,
       src: ''
-    },
-    enableAnimation: false,
-    holoPosition: {
-      position: {
-        x: '50%',
-        y: '50%'
-      },
-      rotation: {
-        x: '0deg',
-        y: '0deg'
-      },
-      transition: 'none'
     }
   })
-
-  const setColorSchema = color => {
-    let colorSchema
-    switch (color) {
-      case 'Blue':
-        colorSchema = {
-          backgroundColor: '#4744CB',
-          innerBackgroundColor: '#ABB3FC'
-        }
-        break
-      case 'Red':
-        colorSchema = {
-          backgroundColor: '#E43232',
-          innerBackgroundColor: '#FCABAB'
-        }
-        break
-      case 'Green':
-        colorSchema = {
-          backgroundColor: '#00A66A',
-          innerBackgroundColor: '#ABFCC2'
-        }
-        break
-      case 'Black':
-        colorSchema = {
-          backgroundColor: 'black',
-          innerBackgroundColor: 'white'
-        }
-        break
-      default:
-        colorSchema = {
-          backgroundColor: '#404040',
-          innerBackgroundColor: 'white'
-        }
-        break
-    }
-
-    setConfigForm(config => ({ ...config, ...colorSchema }))
-  }
 
   useEffect(() => {
     setCode(() => querystring(configForm))
   }, [configForm])
-
-  const querystring = (obj, prefix?) => {
-    const str = []
-    let p
-
-    for (p in obj) {
-      const k = prefix ? prefix + '[' + p + ']' : p
-      const v = obj[p]
-
-      str.push(
-        v !== null && typeof v === 'object'
-          ? querystring(v, k)
-          : encodeURIComponent(k) + '=' + encodeURIComponent(v)
-      )
-    }
-
-    return str.join('&')
-  }
-
-  const registerMouse = e => {
-    const {
-      nativeEvent: { offsetX, offsetY },
-      target: { offsetHeight, offsetWidth }
-    } = e
-
-    const calcPos = (offset: number, size: number) =>
-      Math.abs(Math.floor((100 / size) * offset) - 100)
-
-    const xPos = calcPos(offsetX, offsetWidth)
-    const yPos = calcPos(offsetY, offsetHeight)
-
-    const xRot = (yPos - 50) / 2
-    const yRot = (xPos - 50) * 0.5 * -1
-
-    setConfigForm(config => ({
-      ...config,
-      holoPosition: {
-        position: {
-          x: `${xPos}%`,
-          y: `${yPos}%`
-        },
-        rotation: {
-          x: `${xRot}deg`,
-          y: `${yRot}deg`
-        },
-        transition: 'none'
-      }
-    }))
-  }
-
-  const resetPosition = () => {
-    setConfigForm(config => ({
-      ...config,
-      holoPosition: {
-        position: {
-          x: '50%',
-          y: '50%'
-        },
-        rotation: {
-          x: '0deg',
-          y: '0deg'
-        },
-        transition: '.2s'
-      }
-    }))
-  }
 
   return (
     <Container>
@@ -162,7 +48,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             <input
               type="text"
               autoComplete="off"
-              placeholder={'Untitled card'}
+              placeholder="Untitled card"
               value={configForm.name}
               onChange={e =>
                 setConfigForm(config => ({ ...config, name: e.target.value }))
@@ -175,7 +61,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             <input
               type="text"
               autoComplete="off"
-              placeholder={'blank'}
+              placeholder="Untitled project(1)"
               value={configForm.description}
               onChange={e =>
                 setConfigForm(config => ({
@@ -190,7 +76,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             Image Src:
             <input
               type="text"
-              placeholder={'https://imgur.com/bC8SSpf.png'}
+              placeholder="https://imgur.com/bC8SSpf.png"
               autoComplete="off"
               value={configForm.imgSrc}
               onChange={e =>
@@ -201,7 +87,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
 
           <CheckBox
             value={configForm.sparkles.enabled}
-            label={'Enable Sparkles'}
+            label="Enable Sparkles"
             onChangeValue={e =>
               setConfigForm(config => ({
                 ...config,
@@ -228,7 +114,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
 
           <CheckBox
             value={configForm.holo.enabled}
-            label={'Enable HoloEffect'}
+            label="Enable HoloEffect"
             onChangeValue={e =>
               setConfigForm(config => ({
                 ...config,
@@ -243,7 +129,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
               disabled={!configForm.holo.enabled}
               type="text"
               autoComplete="off"
-              placeholder={'https://i.imgur.com/QPzHsAF.png'}
+              placeholder="https://i.imgur.com/QPzHsAF.png"
               value={configForm.holo.src}
               onChange={e =>
                 setConfigForm(config => ({
@@ -262,7 +148,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
               height="460"
               style={{ perspective: '2000px' }}
             >
-              <Card configs={configForm} />
+              <Card configs={configForm} animation={animation} />
             </foreignObject>
           </svg>
         </div>
@@ -271,8 +157,19 @@ const Home: React.FC<ToggleThemeProps> = props => {
           <label>
             Card color schema:
             <RadioButton
-              options={['Blue', 'Red', 'Black', 'Grey', 'Green']}
-              onChangeValue={e => setColorSchema(e.target.value)}
+              options={[
+                { desc: 'Blue', value: 'blue' },
+                { desc: 'Red', value: 'red' },
+                { desc: 'Black', value: 'black' },
+                { desc: 'Grey', value: 'grey' },
+                { desc: 'Green', value: 'green' }
+              ]}
+              onChangeValue={e =>
+                setConfigForm(configs => ({
+                  ...configs,
+                  colorSchema: e.target.value
+                }))
+              }
             />
           </label>
         </FormContainer>

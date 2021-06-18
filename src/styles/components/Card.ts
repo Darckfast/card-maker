@@ -1,13 +1,17 @@
 import styled from 'styled-components'
 
 interface CardProps {
-  backgroundColor: string
-  innerBackgroundColor: string
-  effects: {
-    holoEffect: string
-    sparklesEffect: string
+  colorSchema: string
+  holo: {
+    enabled: boolean
+    src: string
   }
-  holoPosition: {
+  sparkles: {
+    enabled: boolean
+    src: string
+  }
+  animation: {
+    enableAnimation: boolean
     position: {
       x: string
       y: string
@@ -18,17 +22,17 @@ interface CardProps {
     }
     transition: string
   }
-  enableAnimation: boolean
 }
 
-export const CardContainer = styled.div.attrs((props: any) => ({
-  style: {
-    transform: `rotateX(${props.holoPosition.rotation.x}) rotateY(${props.holoPosition.rotation.y})`,
-    backgroundPositionX: props.holoPosition.position.x,
-    backgroundPositionY: props.holoPosition.position.y,
-    transition: props.holoPosition.transition
-  }
-}))<CardProps>`
+export const CardContainer = styled.div.attrs<CardProps>(
+  ({ animation: { position, rotation, transition } }) => ({
+    style: {
+      transform: `rotateX(${rotation.x}) rotateY(${rotation.y})`,
+      backgroundPosition: `${position.x} ${position.y}`,
+      transition: transition
+    }
+  })
+)<CardProps>`
   width: 320px;
   height: 460px;
 
@@ -41,14 +45,14 @@ export const CardContainer = styled.div.attrs((props: any) => ({
 
   border-radius: 4px;
 
-  background-color: ${props => props.backgroundColor};
+  background-color: ${props =>
+    props.theme.cardTheme[props.colorSchema].primary};
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   transform-origin: center;
-  animation: ${props =>
-    props.enableAnimation ? 'holoCard 15s ease infinite' : 'none'};
+  /* animation: ${({ animation: enableAnimation }) =>
+    enableAnimation ? 'holoCard 15s ease infinite' : 'none'}; */
   perspective: 2000px;
-  transform: translate3d(0, 0, -1px);
 
   ::after {
     content: '';
@@ -59,7 +63,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     border: 1px solid white;
     border-radius: inherit;
 
-    background-image: url(${props => props.effects.sparklesEffect});
+    background-image: ${({ sparkles: { enabled, src } }) =>
+      enabled ? `url(${src})` : 'none'};
 
     mix-blend-mode: screen;
     background-repeat: no-repeat;
@@ -81,11 +86,16 @@ export const CardContainer = styled.div.attrs((props: any) => ({
 
     will-change: transform;
     mix-blend-mode: color-dodge;
-    animation: ${props =>
-      props.enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'};
+    /* animation: ${({ animation: enableAnimation }) =>
+      enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'}; */
 
-    background-image: url(${props => props.effects.holoEffect});
-    /* background-image: ${props =>
+    background-image: ${({ holo: { enabled, src } }) =>
+      enabled ? `url(${src})` : 'none'};
+
+    /*
+    // This is the css used to create the embedded holo effect
+
+    background-image: ${props =>
       props.effects.holoEffect
         ? `linear-gradient(
       120deg,
@@ -101,7 +111,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     max-width: 256px;
     max-height: 200px;
 
-    border: 2px solid ${props => props.innerBackgroundColor};
+    border: 2px solid
+      ${props => props.theme.cardTheme[props.colorSchema].secondary};
     margin-bottom: 2rem;
   }
 
@@ -109,8 +120,9 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     width: 12rem;
     height: 2rem;
 
-    border: 2px solid ${props => props.innerBackgroundColor};
-    color: ${props => props.innerBackgroundColor};
+    border: 2px solid
+      ${props => props.theme.cardTheme[props.colorSchema].secondary};
+    color: ${props => props.theme.cardTheme[props.colorSchema].secondary};
     border-radius: 4px;
     align-self: flex-start;
 
@@ -128,7 +140,8 @@ export const CardContainer = styled.div.attrs((props: any) => ({
     height: 8rem;
 
     color: black;
-    background-color: ${props => props.innerBackgroundColor};
+    background-color: ${props =>
+      props.theme.cardTheme[props.colorSchema].secondary};
     border-radius: 4px;
     display: flex;
     justify-content: center;

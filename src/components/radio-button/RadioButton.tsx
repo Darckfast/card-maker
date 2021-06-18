@@ -3,7 +3,7 @@ import { RadioButtonContainer } from '../../styles/components/RadioButton'
 import { RadioButtonIcon } from '../../styles/svgs/components/radioButton'
 
 interface RadioButtonProps {
-  options: string[]
+  options: { desc: string; value: string }[]
   label?: string
   value?: string
   onChangeValue?: (e: ChangeEvent<HTMLInputElement>) => void
@@ -12,17 +12,17 @@ interface RadioButtonProps {
 const RadioButton: React.FC<RadioButtonProps> = props => {
   return (
     <RadioButtonContainer>
-      {props.options.map((opt, index) => {
+      {props.options.map(({ value, desc }, index) => {
         return (
           <label key={index}>
             <input
               type="radio"
               name="options"
-              value={opt}
+              value={value}
               onChange={props.onChangeValue}
             />
             <RadioButtonIcon />
-            {opt}
+            {desc}
           </label>
         )
       })}
