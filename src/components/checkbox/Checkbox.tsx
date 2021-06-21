@@ -5,6 +5,7 @@ import { ToggleLabel } from '../../styles/components/CheckBox'
 interface CheckBoxProps {
   label?: string
   value: boolean
+  disabled?: boolean
   name?: string
   onChangeValue?: (e: ChangeEvent<HTMLInputElement>) => void
 }
@@ -14,6 +15,7 @@ const CheckBox: React.FC<CheckBoxProps> = props => {
     <ToggleLabel>
       {props.label}
       <input
+        disabled={props.disabled ?? false}
         type="checkbox"
         name={props.name}
         checked={props.value}
