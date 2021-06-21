@@ -6,41 +6,59 @@ import ToggleTheme, {
 } from '../components/toggle-theme/ToggleTheme'
 import { GitHubIcon } from '../styles/svgs/icons/githubIcon'
 import Card from '../components/card/Card'
-import { FormContainer } from '../styles/components/Form'
+import { FormContainer, FormBackground } from '../styles/components/Form'
 import CheckBox from '../components/checkbox/Checkbox'
 import RadioButton from '../components/radio-button/RadioButton'
 import { useMouseMovement } from '../hooks/useMouseMovement'
-import { querystring } from '../utils/querystring'
+import { querystring, reverseQuerystring } from '../utils/querystring'
+import { darkTheme } from '../styles/theme'
 
 const Home: React.FC<ToggleThemeProps> = props => {
   const [code, setCode] = useState('')
-  const [animation, registerMouse, resetPosition] = useMouseMovement()
+  const [animation, registerMouse, resetPosition, changeValue] =
+    useMouseMovement()
 
   const [configForm, setConfigForm] = useState({
     name: '',
     description: '',
-    colorSchema: 'grey',
+    colorSchema: darkTheme.cardTheme.grey,
     imgSrc: '',
     holo: {
       enabled: false,
-      src: ''
+      src: 'https://i.imgur.com/QPzHsAF.png'
     },
     sparkles: {
       enabled: false,
       src: ''
-    }
+    },
+    noise: {
+      enabled: false,
+      src: 'https://imgur.com/bGJ7wi9.png'
+    },
+    type: 'glass'
   })
 
   useEffect(() => {
-    setCode(() => querystring(configForm))
+    setCode(
+      () => `${window.location.origin}/api/card?${querystring(configForm)}`
+    )
   }, [configForm])
+
+  const reverseQuerystringMiddleware = async (e: Promise<string>) => {
+    const inputtedQs = await e
+
+    if (!inputtedQs.length) {
+      console.log('No info found')
+    }
+
+    setConfigForm(config => ({ ...config, ...reverseQuerystring(inputtedQs) }))
+  }
 
   return (
     <Container>
       <Head>
         <title>NextJS Template with Typescript</title>
       </Head>
-
       <main>
         <FormContainer>
           <label>
@@ -129,7 +147,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
               disabled={!configForm.holo.enabled}
               type="text"
               autoComplete="off"
-              placeholder="https://i.imgur.com/QPzHsAF.png"
+              placeholder="Src of holo png"
               value={configForm.holo.src}
               onChange={e =>
                 setConfigForm(config => ({
@@ -139,19 +157,50 @@ const Home: React.FC<ToggleThemeProps> = props => {
               }
             />
           </label>
+
+          <CheckBox
+            value={configForm.noise.enabled}
+            label="Enable Noise"
+            onChangeValue={e =>
+              setConfigForm(config => ({
+                ...config,
+                noise: { ...config.noise, enabled: e.target.checked }
+              }))
+            }
+          />
+
+          <label>
+            Noise Src:
+            <input
+              disabled={!configForm.noise.enabled}
+              type="text"
+              autoComplete="off"
+              placeholder="Src of noise png"
+              value={configForm.noise.src}
+              onChange={e =>
+                setConfigForm(config => ({
+                  ...config,
+                  noise: { ...config.noise, src: e.target.value }
+                }))
+              }
+            />
+          </label>
         </FormContainer>
 
-        <div onMouseMove={e => registerMouse(e)} onMouseLeave={resetPosition}>
+        <FormBackground
+          onMouseMove={e => registerMouse(e)}
+          onMouseLeave={resetPosition}
+        >
           <svg width="320" height="460">
             <foreignObject
               width="320"
               height="460"
               style={{ perspective: '2000px' }}
             >
-              <Card configs={configForm} animation={animation} />
+              <Card {...{ ...configForm, ...animation }} />
             </foreignObject>
           </svg>
-        </div>
+        </FormBackground>
 
         <FormContainer>
           <label>
@@ -162,16 +211,51 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 { desc: 'Red', value: 'red' },
                 { desc: 'Black', value: 'black' },
                 { desc: 'Grey', value: 'grey' },
-                { desc: 'Green', value: 'green' }
+                { desc: 'Green', value: 'green' },
+                { desc: 'Transparent', value: 'transparent' }
               ]}
+              type="card_color"
               onChangeValue={e =>
                 setConfigForm(configs => ({
                   ...configs,
-                  colorSchema: e.target.value
+                  colorSchema: darkTheme.cardTheme[e.target.value]
                 }))
               }
             />
           </label>
+
+          <label>
+            Card type:
+            <RadioButton
+              options={[
+                { desc: 'Solid', value: 'solid' },
+                { desc: 'Glass', value: 'glass' }
+              ]}
+              type="card_type"
+              onChangeValue={e =>
+                setConfigForm(configs => ({
+                  ...configs,
+                  type: e.target.value
+                }))
+              }
+            />
+          </label>
+
+          <CheckBox
+            value={animation.enableAnimation}
+            label="Mouse animation"
+            onChangeValue={e =>
+              changeValue('enableAnimation', e.target.checked)
+            }
+          />
+
+          <CheckBox
+            value={animation.enableNaturalAnimation}
+            label="Natural animation"
+            onChangeValue={e =>
+              changeValue('enableNaturalAnimation', e.target.checked)
+            }
+          />
         </FormContainer>
         <footer>
           <a href="https://github.com/Darckfast/nextjs-typescript-template">
@@ -187,6 +271,13 @@ const Home: React.FC<ToggleThemeProps> = props => {
         <div className="code">
           <button onClick={() => navigator.clipboard.writeText(code)}>
             Copy card code
+          </button>
+          <button
+            onClick={() =>
+              reverseQuerystringMiddleware(navigator.clipboard.readText())
+            }
+          >
+            Paste card code
           </button>
         </div>
       </main>
