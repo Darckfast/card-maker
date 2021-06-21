@@ -7,7 +7,7 @@ export const FormContainer = styled.form`
   flex-direction: column;
 
   label {
-    align-self: flex-end;
+    align-self: flex-start;
 
     input[type='text'] {
       transition: 0.2s;
@@ -23,6 +23,7 @@ export const FormContainer = styled.form`
 
       &:disabled {
         border: 2px solid ${props => props.theme.colors.disabledText};
+        color: grey;
       }
 
       &::placeholder {
@@ -38,5 +39,20 @@ export const FormContainer = styled.form`
       outline: none;
       background-color: transparent;
     }
+  }
+`
+export const FormBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before {
+    position: absolute;
+    content: '';
+    height: 15rem;
+    width: 15rem;
+    border-radius: 50%;
+
+    background-color: orangered;
   }
 `

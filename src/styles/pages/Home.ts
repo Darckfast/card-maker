@@ -32,12 +32,15 @@ export const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 1rem;
 
       font-size: 18px;
       color: orange;
 
       button {
+        &:first-child {
+          margin-right: 1rem;
+        }
+
         transition: 0.2s;
         background-color: transparent;
         outline: none;

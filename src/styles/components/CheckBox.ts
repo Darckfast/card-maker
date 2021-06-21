@@ -5,7 +5,7 @@ export const ToggleLabel = styled.label`
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 1rem;
-  align-self: flex-end;
+  align-self: flex-end !important;
 
   input {
     display: none;
@@ -18,6 +18,13 @@ export const ToggleLabel = styled.label`
     }
   }
 
+  input:disabled + svg {
+    rect,
+    path {
+      stroke: ${props => props.theme.colors.disabledText} !important;
+    }
+  }
+
   svg {
     cursor: pointer;
     margin-left: 1em;
@@ -26,7 +33,6 @@ export const ToggleLabel = styled.label`
     height: 32px;
 
     path {
-      stroke: ${props => props.theme.colors.text};
       transition: stroke-dashoffset 0.2s linear;
       stroke-dasharray: 34;
       stroke-dashoffset: 34;
