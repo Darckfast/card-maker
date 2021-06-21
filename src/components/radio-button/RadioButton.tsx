@@ -10,7 +10,7 @@ interface RadioButtonProps {
   onChangeValue?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const RadioButton: React.FC<RadioButtonProps> = props => {
+export const RadioButton: React.FC<RadioButtonProps> = props => {
   return (
     <RadioButtonContainer>
       {props.options.map(({ value, desc }, index) => {
@@ -30,5 +30,3 @@ const RadioButton: React.FC<RadioButtonProps> = props => {
     </RadioButtonContainer>
   )
 }
-
-export default RadioButton

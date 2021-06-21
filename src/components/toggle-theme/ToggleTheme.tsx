@@ -8,7 +8,7 @@ export interface ToggleThemeProps {
   changeTheme: () => void
 }
 
-const ToggleTheme: React.FC<ToggleThemeProps> = props => {
+export const ToggleTheme: React.FC<ToggleThemeProps> = props => {
   return (
     <a className={'toggle-button'} onClick={props.changeTheme}>
       {props.currentTheme.name === 'light' ? (
@@ -19,5 +19,3 @@ const ToggleTheme: React.FC<ToggleThemeProps> = props => {
     </a>
   )
 }
-
-export default ToggleTheme

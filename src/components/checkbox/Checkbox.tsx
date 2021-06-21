@@ -10,7 +10,7 @@ interface CheckBoxProps {
   onChangeValue?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const CheckBox: React.FC<CheckBoxProps> = props => {
+export const CheckBox: React.FC<CheckBoxProps> = props => {
   return (
     <ToggleLabel>
       {props.label}
@@ -25,5 +25,3 @@ const CheckBox: React.FC<CheckBoxProps> = props => {
     </ToggleLabel>
   )
 }
-
-export default CheckBox

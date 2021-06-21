@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Container } from '../styles/pages/Home'
-import ToggleTheme, {
+import {
+  ToggleTheme,
   ToggleThemeProps
 } from '../components/toggle-theme/ToggleTheme'
 import { GitHubIcon } from '../styles/svgs/icons/githubIcon'
-import Card from '../components/card/Card'
 import { FormContainer, FormBackground } from '../styles/components/Form'
-import CheckBox from '../components/checkbox/Checkbox'
-import RadioButton from '../components/radio-button/RadioButton'
 import { useMouseMovement } from '../hooks/useMouseMovement'
 import { querystring, reverseQuerystring } from '../utils/querystring'
 import { darkTheme } from '../styles/theme'
+import { Card } from '../components/card/Card'
+import { CheckBox } from '../components/checkbox/Checkbox'
+import { RadioButton } from '../components/radio-button/RadioButton'
 
 const Home: React.FC<ToggleThemeProps> = props => {
   const [code, setCode] = useState('')

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ServerStyleSheet } from 'styled-components'
 import { renderToString } from 'react-dom/server'
-import Card from '../../../components/card/Card'
+import { Card } from '../../../components/card/Card'
 import { get } from 'https'
 import { querystring, reverseQuerystring } from '../../../utils/querystring'
 

@@ -35,7 +35,7 @@ export interface CardComponentProps {
   transition: string
 }
 
-const Card: React.FC<CardComponentProps> = props => {
+export const Card: React.FC<CardComponentProps> = props => {
   return (
     <CardContainer {...props}>
       <div className="noise"></div>
@@ -46,5 +46,3 @@ const Card: React.FC<CardComponentProps> = props => {
     </CardContainer>
   )
 }
-
-export default Card
