@@ -1,8 +1,14 @@
 import { useState } from 'react'
 
-export const useMouseMovement = (): [any, (any) => void, () => void] => {
+export const useMouseMovement = (): [
+  any,
+  (mouseMovement: any) => void,
+  () => void,
+  (paramName: string, value: any) => void
+] => {
   const [positions, setPositions] = useState({
     enableAnimation: false,
+    enableNaturalAnimation: false,
     position: {
       x: '50%',
       y: '50%'
@@ -18,32 +24,36 @@ export const useMouseMovement = (): [any, (any) => void, () => void] => {
     nativeEvent: { offsetX, offsetY },
     target: { offsetHeight, offsetWidth }
   }) => {
-    const calcPos = (offset: number, size: number) =>
-      Math.abs(Math.floor((100 / size) * offset) - 100)
+    if (positions.enableAnimation) {
+      setPositions(movement => {
+        const calcPos = (offset: number, size: number) =>
+          Math.abs(Math.floor((100 / size) * offset) - 100)
 
-    const xPos = calcPos(offsetX, offsetWidth)
-    const yPos = calcPos(offsetY, offsetHeight)
+        const xPos = calcPos(offsetX, offsetWidth)
+        const yPos = calcPos(offsetY, offsetHeight)
 
-    const xRot = (yPos - 50) / 2
-    const yRot = (xPos - 50) * 0.5 * -1
+        const xRot = (yPos - 50) / 2
+        const yRot = (xPos - 50) * 0.5 * -1
 
-    setPositions(() => ({
-      enableAnimation: false,
-      position: {
-        x: `${xPos}%`,
-        y: `${yPos}%`
-      },
-      rotation: {
-        x: `${xRot}deg`,
-        y: `${yRot}deg`
-      },
-      transition: 'none'
-    }))
+        return {
+          ...movement,
+          position: {
+            x: `${xPos}%`,
+            y: `${yPos}%`
+          },
+          rotation: {
+            x: `${xRot}deg`,
+            y: `${yRot}deg`
+          },
+          transition: 'none'
+        }
+      })
+    }
   }
 
   const resetPositions = () => {
-    setPositions(() => ({
-      enableAnimation: false,
+    setPositions(movement => ({
+      ...movement,
       position: {
         x: '50%',
         y: '50%'
@@ -56,5 +66,11 @@ export const useMouseMovement = (): [any, (any) => void, () => void] => {
     }))
   }
 
-  return [positions, registerMovement, resetPositions]
+  const changeValue = (paramName: string, value: any) => {
+    setPositions(positions => ({ ...positions, [paramName]: value }))
+
+    console.log(positions)
+  }
+
+  return [positions, registerMovement, resetPositions, changeValue]
 }
