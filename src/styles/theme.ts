@@ -18,6 +18,10 @@ export const cardTheme = {
   grey: {
     primary: '#404040',
     secondary: 'white'
+  },
+  transparent: {
+    primary: 'transparent',
+    secondary: 'white'
   }
 }
 
