@@ -8,6 +8,8 @@ import { querystring, reverseQuerystring } from '../../../utils/querystring'
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const params = reverseQuerystring('?' + querystring(req.query))
 
+  params.imgSrc = await getImageAsBase64(params.imgSrc as string)
+
   if (params.holo.enabled) {
     params.holo.src = await getImageAsBase64(params.holo.src as string)
   }
