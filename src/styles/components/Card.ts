@@ -1,38 +1,17 @@
 import styled from 'styled-components'
+import { CardComponentProps } from '../../components/card/Card'
 
-interface CardProps {
-  colorSchema: string
-  holo: {
-    enabled: boolean
-    src: string
-  }
-  sparkles: {
-    enabled: boolean
-    src: string
-  }
-  animation: {
-    enableAnimation: boolean
-    position: {
-      x: string
-      y: string
-    }
-    rotation: {
-      x: string
-      y: string
-    }
-    transition: string
-  }
-}
-
-export const CardContainer = styled.div.attrs<CardProps>(
-  ({ animation: { position, rotation, transition } }) => ({
+export const CardContainer = styled.div.attrs<CardComponentProps>(
+  ({ position, rotation, transition }) => ({
     style: {
-      transform: `rotateX(${rotation.x}) rotateY(${rotation.y})`,
-      backgroundPosition: `${position.x} ${position.y}`,
-      transition: transition
+      transform: rotation
+        ? `rotateX(${rotation.x}) rotateY(${rotation.y})`
+        : 'none',
+      backgroundPosition: position ? `${position.x} ${position.y}` : 'none',
+      transition: transition ?? 'none'
     }
   })
-)<CardProps>`
+)<CardComponentProps>`
   width: 320px;
   height: 460px;
 
@@ -45,14 +24,15 @@ export const CardContainer = styled.div.attrs<CardProps>(
 
   border-radius: 4px;
 
-  background-color: ${props =>
-    props.theme.cardTheme[props.colorSchema].primary};
+  background-color: ${props => props.colorSchema.primary};
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   transform-origin: center;
-  /* animation: ${({ animation: enableAnimation }) =>
-    enableAnimation ? 'holoCard 15s ease infinite' : 'none'}; */
+  animation: ${props =>
+    props.enableNaturalAnimation ? 'holoCard 15s ease infinite' : 'none'};
   perspective: 2000px;
+
+  backdrop-filter: ${props => (props.type === 'glass' ? `blur(42px)` : 'none')};
 
   ::after {
     content: '';
@@ -86,33 +66,20 @@ export const CardContainer = styled.div.attrs<CardProps>(
 
     will-change: transform;
     mix-blend-mode: color-dodge;
-    /* animation: ${({ animation: enableAnimation }) =>
-      enableAnimation ? 'holoGradient 15s ease infinite both' : 'none'}; */
-
-    background-image: ${({ holo: { enabled, src } }) =>
-      enabled ? `url(${src})` : 'none'};
-
-    /*
-    // This is the css used to create the embedded holo effect
+    animation: ${props =>
+      props.enableNaturalAnimation
+        ? 'holoGradient 15s ease infinite both'
+        : 'none'};
 
     background-image: ${props =>
-      props.effects.holoEffect
-        ? `linear-gradient(
-      120deg,
-      transparent 18%,
-      rgba(31, 231, 255, 0.7) 46%,
-      rgba(255, 46, 235, 0.7) 56%,
-      transparent 81%,
-      transparent 98%);`
-        : 'none'} */
+      props.holo.enabled ? `url(${props.holo.src})` : 'none'};
   }
 
   img {
     max-width: 256px;
     max-height: 200px;
 
-    border: 2px solid
-      ${props => props.theme.cardTheme[props.colorSchema].secondary};
+    border: 2px solid ${props => props.colorSchema.secondary};
     margin-bottom: 2rem;
   }
 
@@ -120,9 +87,8 @@ export const CardContainer = styled.div.attrs<CardProps>(
     width: 12rem;
     height: 2rem;
 
-    border: 2px solid
-      ${props => props.theme.cardTheme[props.colorSchema].secondary};
-    color: ${props => props.theme.cardTheme[props.colorSchema].secondary};
+    border: 2px solid ${props => props.colorSchema.secondary};
+    color: ${props => props.colorSchema.secondary};
     border-radius: 4px;
     align-self: flex-start;
 
@@ -133,6 +99,8 @@ export const CardContainer = styled.div.attrs<CardProps>(
     display: flex;
     justify-content: center;
     align-items: center;
+
+    opacity: ${props => (props.type === 'glass' ? '0.6' : 'none')};
   }
 
   .description {
@@ -140,8 +108,7 @@ export const CardContainer = styled.div.attrs<CardProps>(
     height: 8rem;
 
     color: black;
-    background-color: ${props =>
-      props.theme.cardTheme[props.colorSchema].secondary};
+    background-color: ${props => props.colorSchema.secondary};
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -151,6 +118,29 @@ export const CardContainer = styled.div.attrs<CardProps>(
     overflow-wrap: anywhere;
     flex-flow: wrap;
     padding: 0.5rem;
+
+    opacity: ${props => (props.type === 'glass' ? '0.6' : 'none')};
+  }
+
+  .noise {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    mix-blend-mode: overlay;
+    opacity: 0.2;
+    background-image: ${props =>
+      props.noise.enabled ? `url(${props.noise.src})` : 'none'};
+  }
+
+  .glass {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: radial-gradient(
+      100% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
   }
 
   @keyframes holoCard {
