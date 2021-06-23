@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Container } from '../styles/pages/Home'
-import {
-  ToggleTheme,
-  ToggleThemeProps
-} from '../components/toggle-theme/ToggleTheme'
+import { ToggleTheme } from '../components/toggle-theme/ToggleTheme'
 import { GitHubIcon } from '../styles/svgs/icons/githubIcon'
-import { FormContainer, FormBackground } from '../styles/components/Form'
+import {
+  FormContainer,
+  FormBackground,
+  LabelInput
+} from '../styles/components/Form'
 import { useMouseMovement } from '../hooks/useMouseMovement'
 import { querystring, reverseQuerystring } from '../utils/querystring'
 import { darkTheme } from '../styles/theme'
@@ -14,7 +15,7 @@ import { Card } from '../components/card/Card'
 import { CheckBox } from '../components/checkbox/Checkbox'
 import { RadioButton } from '../components/radio-button/RadioButton'
 
-const Home: React.FC<ToggleThemeProps> = props => {
+const Home: React.FC = () => {
   const [code, setCode] = useState('')
   const [animation, registerMouse, resetPosition, changeValue] =
     useMouseMovement()
@@ -62,7 +63,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
       </Head>
       <main>
         <FormContainer>
-          <label>
+          <LabelInput>
             Card Name:
             <input
               type="text"
@@ -73,9 +74,9 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 setConfigForm(config => ({ ...config, name: e.target.value }))
               }
             />
-          </label>
+          </LabelInput>
 
-          <label>
+          <LabelInput>
             Card Description:
             <input
               type="text"
@@ -89,9 +90,9 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
 
-          <label>
+          <LabelInput>
             Image Src:
             <input
               type="text"
@@ -102,7 +103,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 setConfigForm(config => ({ ...config, imgSrc: e.target.value }))
               }
             />
-          </label>
+          </LabelInput>
 
           <CheckBox
             value={configForm.sparkles.enabled}
@@ -115,7 +116,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             }
           />
 
-          <label>
+          <LabelInput>
             Sparkles Src:
             <input
               disabled={!configForm.sparkles.enabled}
@@ -129,7 +130,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
 
           <CheckBox
             value={configForm.holo.enabled}
@@ -142,7 +143,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             }
           />
 
-          <label>
+          <LabelInput>
             Holo Src:
             <input
               disabled={!configForm.holo.enabled}
@@ -157,7 +158,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
 
           <CheckBox
             value={configForm.noise.enabled}
@@ -170,7 +171,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             }
           />
 
-          <label>
+          <LabelInput>
             Noise Src:
             <input
               disabled={!configForm.noise.enabled}
@@ -185,7 +186,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
         </FormContainer>
 
         <FormBackground
@@ -204,7 +205,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
         </FormBackground>
 
         <FormContainer>
-          <label>
+          <LabelInput>
             Card color schema:
             <RadioButton
               options={[
@@ -223,9 +224,9 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
 
-          <label>
+          <LabelInput>
             Card type:
             <RadioButton
               options={[
@@ -240,7 +241,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
                 }))
               }
             />
-          </label>
+          </LabelInput>
 
           <CheckBox
             value={animation.enableAnimation}
@@ -263,10 +264,7 @@ const Home: React.FC<ToggleThemeProps> = props => {
             <GitHubIcon></GitHubIcon>
           </a>
 
-          <ToggleTheme
-            changeTheme={props.changeTheme}
-            currentTheme={props.currentTheme}
-          ></ToggleTheme>
+          <ToggleTheme />
         </footer>
 
         <div className="code">
