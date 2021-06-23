@@ -12,7 +12,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: auto 320px auto;
     grid-column-gap: 1rem;
-    padding: 1rem;
+    padding: 2rem 1rem;
     border-radius: 20px;
     transition: 0.2s;
 
