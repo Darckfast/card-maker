@@ -205,7 +205,7 @@ const Home: React.FC = () => {
         </FormBackground>
 
         <FormContainer>
-          <LabelInput>
+          <label>
             Card color schema:
             <RadioButton
               options={[
@@ -224,9 +224,9 @@ const Home: React.FC = () => {
                 }))
               }
             />
-          </LabelInput>
+          </label>
 
-          <LabelInput>
+          <label>
             Card type:
             <RadioButton
               options={[
@@ -241,7 +241,7 @@ const Home: React.FC = () => {
                 }))
               }
             />
-          </LabelInput>
+          </label>
 
           <CheckBox
             value={animation.enableAnimation}

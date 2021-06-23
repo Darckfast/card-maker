@@ -31,14 +31,6 @@ export const LabelInput = styled.label`
       font-weight: 400;
     }
   }
-
-  input[type='color'] {
-    width: 10rem;
-    height: 2rem;
-
-    outline: none;
-    background-color: transparent;
-  }
 `
 
 export const FormBackground = styled.div`

@@ -12,7 +12,7 @@ export const Container = styled.div`
     display: grid;
     grid-template-columns: auto 320px auto;
     grid-column-gap: 1rem;
-    padding: 2rem 1rem;
+    padding: 2rem;
     border-radius: 20px;
     transition: 0.2s;
 
@@ -29,7 +29,8 @@ export const Container = styled.div`
       align-items: center;
 
       a {
-        margin: 1rem;
+        margin-right: 1rem;
+        margin-left: 1rem;
       }
     }
 
