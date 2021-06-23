@@ -1,17 +1,14 @@
-import React from 'react'
-import { DefaultTheme } from 'styled-components'
+import React, { useContext } from 'react'
+import { ThemeContext } from '../../pages/_app'
 import { DarkIcon } from '../../styles/svgs/icons/darkIcon'
 import { LightIcon } from '../../styles/svgs/icons/lightIcon'
 
-export interface ToggleThemeProps {
-  currentTheme: { activeTheme: DefaultTheme; name: string }
-  changeTheme: () => void
-}
+export const ToggleTheme: React.FC = () => {
+  const { currentTheme, changeTheme } = useContext(ThemeContext)
 
-export const ToggleTheme: React.FC<ToggleThemeProps> = props => {
   return (
-    <a className={'toggle-button'} onClick={props.changeTheme}>
-      {props.currentTheme.name === 'light' ? (
+    <a className={'toggle-button'} onClick={changeTheme}>
+      {currentTheme.name === 'light' ? (
         <DarkIcon></DarkIcon>
       ) : (
         <LightIcon></LightIcon>
